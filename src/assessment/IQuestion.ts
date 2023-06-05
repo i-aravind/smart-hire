@@ -5,5 +5,6 @@ export interface IQuestion{
     option2:string,
     option3:string,
     option4:string,
-    selected:string
+    selected:string,
+    answer:string
 }

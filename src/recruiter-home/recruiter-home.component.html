@@ -43,6 +43,7 @@
                 <th>Candidate Role</th>
                 <th>Candidate Experience</th>
                 <th>Assessment Status</th>
+                <th>Score</th>
                 <th>Candidate Status</th>
                 <th>Recruiter Actions</th>
             </tr>
@@ -54,8 +55,9 @@
                 <td>{{candidate.candidateEmail}}</td>
                 <td>{{candidate.candidateQualification}}</td>
                 <td>{{candidate.candidateRole}}</td>
-                <td>{{candidate.candidateExperince}}</td>
+                <td>{{candidate.candidateExperince}} years</td>
                 <td>{{candidate.assessmentStatus}}</td>
+                <td>{{candidate.score}}</td>
                 <td>{{candidate.candidateStatus}}</td>
                 <td>
                     <span (click)="checkOptions(candidate)" style="color:teal" class="glyphicon glyphicon-export"><b style="color:teal" class="action">View</b></span>

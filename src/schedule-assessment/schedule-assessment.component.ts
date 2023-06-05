@@ -15,7 +15,7 @@ import { ScheduleAssessmentService } from "./schedule-assessment.service";
 export class ScheduleAssessmentComponent{
     pageTitle:string = 'schedule-assessment'
     _recruiter_response:IRecruiter = {recruiterId:'',recruiterName:'',recruiterEmail:'',password:'',errorMsg:'',authenticated:false}
-    _candidate:ICandidateView = {candidateId: "",candidateName: "",candidateEmail: "",candidateRole: "",candidateExperince: "",candidateQualification: "",assessmentStatus: "",candidateStatus: ""}
+    _candidate:ICandidateView = {candidateId: "",candidateName: "",candidateEmail: "",candidateRole: "",candidateExperince: "",candidateQualification: "",assessmentStatus: "",candidateStatus: "",score:''}
     currentDate:Date = new Date();
     _assessment:IAssessment = {candidateId: '',assessmentId: "",assessmentName: "",assignedDate: "",expiryDate: "",status: "",recruiterEmail: ""}
     assessments:string[]=['Java Developer','Big Data Developer','Linux Admin','Agile Developer']

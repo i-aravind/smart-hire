@@ -4,6 +4,7 @@ import { CandidateRoutingModule } from "src/candidate-login/candidate-login-rout
 import { SharingService } from "src/shared/shared.service";
 import { AssessmentComponent } from "./assessment.component";
 import { AssessmentService } from "./assessment.service";
+import { RoundPipe } from "./round-pipe";
 
 @NgModule({
     imports : [
@@ -11,14 +12,16 @@ import { AssessmentService } from "./assessment.service";
         CandidateRoutingModule,
     ],
     declarations : [
-        AssessmentComponent
+        AssessmentComponent,
+        RoundPipe
     ],
     providers : [
         SharingService,
         AssessmentService
     ],
     exports : [
-        AssessmentComponent
+        AssessmentComponent,
+        RoundPipe
     ]
 })
 export class AssessmentModule{

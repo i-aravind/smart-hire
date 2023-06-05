@@ -68,7 +68,7 @@
                     <tr *ngIf="_assessments.length==0"><td></td><td>No assessment available right now</td><td></td><td></td><td></td><td></td><td></td></tr>
                     <tr *ngFor="let assessment of _assessments">
                         <td>
-                            <input type="radio" name="assessmentSelection" [disabled]="checkActiveAssessment(assessment)" (change)="onSelected(assessment)">
+                            <input type="radio" name="assessmentSelection" [disabled]="checkActiveAssessment(assessment.status)" (change)="onSelected(assessment)">
                         </td>
                         <td>{{assessment.assessmentId}}</td>
                         <td>{{assessment.assessmentName | uppercase}}</td>

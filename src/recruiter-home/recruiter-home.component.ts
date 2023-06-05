@@ -15,7 +15,7 @@ export class RecruiterHomeComponent{
     
     _recruiter_response:IRecruiter = {recruiterId:'',recruiterName:'',recruiterEmail:'',password:'',errorMsg:'',authenticated:false}
     _candidates: ICandidateView[] = []
-    filters:string[]=['Candidate Id','Candidate Name','Candidate Email','Candidate Role','Candidate Status','Candidate Qualification','Assessment Status']
+    filters:string[]=['Candidate Id','Candidate Name','Candidate Email','Candidate Role','Candidate Status','Candidate Qualification','Assessment Status','Score']
     filterSelector:string=''
     candidateFilter:string = ''
     candidateFilters:string[]=[]

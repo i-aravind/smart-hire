@@ -4,40 +4,48 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
-<div class="row" [hidden]="isProceeded">
-    <h1>Assessment Checklist</h1>
-    <h3><span class="glyphicon glyphicon-ok"></span> Total duration will be {{(timeLeft/60) | number:'1.0-0'}} minutes</h3>
-    <h3><span class="glyphicon glyphicon-ok"></span> Please do not try to switch tabs</h3>
-    <h3><span class="glyphicon glyphicon-ok"></span> Please do not try to minimize this tab</h3>
-    <h3><span class="glyphicon glyphicon-ok"></span> Please do not close this window until the assessment is submitted</h3>
-</div>
-<div class="form-group" [hidden]="!isProceeded || isfinishedAssesment">
-    <div class="row">
-        <div class="col">
-            <h1>Questions</h1>
+<div class="active" [hidden]="isNavigated">
+    <div class="row" [hidden]="isProceeded">
+        <h1>Assessment Checklist</h1>
+        <h3><span class="glyphicon glyphicon-ok"></span> Total duration will be {{(timeLeft/60) | number:'1.0-0'}} minutes</h3>
+        <h3><span class="glyphicon glyphicon-ok"></span> Please do not try to switch tabs</h3>
+        <h3><span class="glyphicon glyphicon-ok"></span> Please do not try to minimize this tab</h3>
+        <h3><span class="glyphicon glyphicon-ok"></span> Please do not close this window until the assessment is submitted</h3>
+    </div>
+    <div class="form-group" [hidden]="!isProceeded || isfinishedAssesment">
+        <div class="row">
+            <div class="col">
+                <h1>Questions</h1>
+            </div>
+            <div class="col">
+                <h2>Time remaining {{(timeLeft/60) | round:4}}:{{timeLeft%60}}</h2>
+            </div>
         </div>
-        <div class="col">
-            <h2>Time remaining {{(timeLeft/60) | number:'1.0-0'}}:{{timeLeft%60}}</h2>
+        <h2>{{questions[currQuestion].questionId}}) {{questions[currQuestion].questionDescription}}</h2>
+        <div><h3><input type="radio" name="options" [checked]="this.questions[currQuestion].selected == questions[currQuestion].option1" (change)="answerSelected(currQuestion,questions[currQuestion].option1)"> {{questions[currQuestion].option1}}</h3></div>
+        <div><h3><input type="radio" name="options" [checked]="this.questions[currQuestion].selected == questions[currQuestion].option2" (change)="answerSelected(currQuestion,questions[currQuestion].option2)"> {{questions[currQuestion].option2}}</h3></div>
+        <div><h3><input type="radio" name="options" [checked]="this.questions[currQuestion].selected == questions[currQuestion].option3" (change)="answerSelected(currQuestion,questions[currQuestion].option3)"> {{questions[currQuestion].option3}}</h3></div>
+        <div><h3><input type="radio" name="options" [checked]="this.questions[currQuestion].selected == questions[currQuestion].option4" (change)="answerSelected(currQuestion,questions[currQuestion].option4)"> {{questions[currQuestion].option4}}</h3></div>
+        <div class="row">
+            <div class="col">
+                <button class="proceed" [hidden]="currQuestion==0" (click)="previous()">Previous</button>
+                <button class="proceed" [hidden]="currQuestion==9" (click)="next()">Next</button>
+            </div>
+            <div class="col">
+                <button class="proceed" style="background-color:brown" [disabled]="!(selectedCount==10)" (click)="submit()">Submit</button>
+            </div>
         </div>
     </div>
-    <h2>{{questions[currQuestion].questionId}}) {{questions[currQuestion].questionDescription}}</h2>
-    <div><h3><input type="radio" name="options" [checked]="this.questions[currQuestion].selected == questions[currQuestion].option1" (change)="answerSelected(currQuestion,questions[currQuestion].option1)"> {{questions[currQuestion].option1}}</h3></div>
-    <div><h3><input type="radio" name="options" [checked]="this.questions[currQuestion].selected == questions[currQuestion].option2" (change)="answerSelected(currQuestion,questions[currQuestion].option2)"> {{questions[currQuestion].option2}}</h3></div>
-    <div><h3><input type="radio" name="options" [checked]="this.questions[currQuestion].selected == questions[currQuestion].option3" (change)="answerSelected(currQuestion,questions[currQuestion].option3)"> {{questions[currQuestion].option3}}</h3></div>
-    <div><h3><input type="radio" name="options" [checked]="this.questions[currQuestion].selected == questions[currQuestion].option4" (change)="answerSelected(currQuestion,questions[currQuestion].option4)"> {{questions[currQuestion].option4}}</h3></div>
-    <div class="row">
-        <div class="col">
-            <button class="proceed" [hidden]="currQuestion==0" (click)="previous()">Previous</button>
-            <button class="proceed" [hidden]="currQuestion==9" (click)="next()">Next</button>
-        </div>
-        <div class="col">
-            <button class="proceed" style="background-color:brown" [disabled]="!(selectedCount==10)" (click)="submit()">Submit</button>
-        </div>
+    <div class="form-group" [hidden]="!isfinishedAssesment">
+        <div align="center"><h1><span class="glyphicon glyphicon-ok"></span>Assessment Completed</h1></div>
+        <div align="center"><h1> Your score is {{this.score*10}}%</h1></div>
+        <div align="center"><h1>You can now close this window</h1></div>
+        
+        <div align="center"><button class="proceed" (click)="close()">Close</button></div>
     </div>
+    <button class="proceed" [hidden]="isProceeded" (click)="changeProceedStatus()">Proceed</button>
 </div>
-<div class="form-group" [hidden]="!isfinishedAssesment">
-    <div align="center"><h1><span class="glyphicon glyphicon-ok"></span>Assessment Completed</h1></div>
-    <div align="center"><h3>You can now close the window</h3></div>
-    <div align="center"><button class="proceed" (click)="close()">Close</button></div>
+<div class="inactive" [hidden]="!isNavigated">
+    <div align="center"><h1 style="color:red">Navigation detected! Remaining attempts {{2-navigateWarning}} out of {{2}}</h1></div>
+    <div align="center"><button class="proceed" (click)="resume()">Resume</button></div>
 </div>
-<button class="proceed" [hidden]="isProceeded" (click)="changeProceedStatus()">Proceed</button>

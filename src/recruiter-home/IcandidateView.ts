@@ -6,5 +6,6 @@ export interface ICandidateView{
     candidateExperince:string,
     candidateQualification:string,
     assessmentStatus:string,
-    candidateStatus:string
+    candidateStatus:string,
+    score:string
 }

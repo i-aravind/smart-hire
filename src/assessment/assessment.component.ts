@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ErrorHandler } from '@angular/core';
 import { IQuestion } from './IQuestion';
 import { AssessmentService } from './assessment.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-assessment',
   templateUrl: './assessment.component.html',
   styleUrls: ['./assessment.component.css']
 })
-export class AssessmentComponent {
+export class AssessmentComponent{
 
   pageTitle:string = "Assessment"
   selectedAssessment:string = ''
@@ -17,9 +18,23 @@ export class AssessmentComponent {
   currQuestion:number = 0
   timeLeft: number = 600;
   selectedCount:number = 0
-  isfinishedAssesment:boolean = false;
+  isfinishedAssesment:boolean = false
+  score:number = 0
+  navigateWarning:number = 0
+  isNavigated:boolean = false
 
-  constructor(private _assessmentService:AssessmentService){
+  constructor(private _assessmentService:AssessmentService, private _router:Router){
+    document.addEventListener('visibilitychange',() =>{
+      if(document.hidden){
+        this.isNavigated = true
+        if(this.navigateWarning<2){
+          this.navigateWarning++;
+        }
+      }
+      if(this.navigateWarning==2){
+        this.submit()
+      }
+  })
   }
 
   ngOnInit():void{
@@ -35,7 +50,6 @@ export class AssessmentComponent {
 
   answerSelected(questionId:number, answerSelected:string){
     this.questions[this.currQuestion].selected=answerSelected
-    console.log(this.questions.filter(ques=>ques.selected!=''))
     this.selectedCount = this.questions.filter(ques=>ques.selected!=undefined).length
   }
 
@@ -48,13 +62,21 @@ export class AssessmentComponent {
   }
 
   submit(){
-    if(window.confirm("Are you sure want to submit?")){
       this.isfinishedAssesment = true;
-    }
+      this._assessmentService.sendSubmission(this.candidateId,this.selectedAssessment,this.questions).subscribe(resp=>{
+        this.score = resp
+      })
   }
 
   close(){
     window. self. close();
+  }
+
+  resume(){
+    this.isNavigated = false
+    if(this.navigateWarning==2){
+      this.isfinishedAssesment = true
+    }
   }
 
 startTimer() {

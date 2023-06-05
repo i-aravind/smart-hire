@@ -17,6 +17,7 @@ export class CandidateHomeComponent{
     isAssessmentSelected:boolean=false
     selectedAssessment:string=''
     errorMessage:string=''
+    checkboxEnabled:boolean = false
 
     constructor(private _sharingService: SharingService, private _router:Router, private _candidateHomeService:CandidateHomeService){
         if(this._sharingService.sharedValue !== undefined){
@@ -25,6 +26,9 @@ export class CandidateHomeComponent{
         if(this._response.authenticated === false && this._response.candidateId===""){
             this._router.navigate(["/candidate-login"])
         }
+        document.addEventListener('visibilitychange',() =>{
+            this.ngOnInit()
+        })
     }
 
     ngOnInit(){
@@ -36,14 +40,18 @@ export class CandidateHomeComponent{
         this.selectedAssessment=assessment.assessmentId
     }
 
-    checkActiveAssessment(assessment:IAssessment):boolean{
-        if(assessment.status==='PENDING'){
-            return false;
+    checkActiveAssessment(assessmentStatus:string):boolean{
+        if(assessmentStatus==='PENDING'){
+            this.checkboxEnabled = false
+        }else{
+            this.checkboxEnabled = true
         }
-        return true;
+        return this.checkboxEnabled;
     }
 
     start() {
+        this.isAssessmentSelected = false;
+        this.checkboxEnabled = true;
         this._sharingService.sharedValue = [this._response,this.selectedAssessment]
         localStorage.setItem("assessmentId",JSON.stringify(this.selectedAssessment))
         localStorage.setItem("candidateId",JSON.stringify(this._response.candidateId))
