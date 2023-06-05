@@ -1,0 +1,85 @@
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <div class="alert alert-info" role="alert">
+            <div class="row">
+                <div class="col-md-11">
+                    Candidate Dashboard - Welcome {{_response.candidateName}}!
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger" (click)="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row"><br></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6"><b>Candidate Reference Number:</b></div>
+                    <div class="col-md-6">{{_response.candidateId}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"><b>Name:</b></div>
+                    <div class="col-md-6">{{_response.candidateName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"><b>Email:</b></div>
+                    <div class="col-md-6">{{_response.email}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"><b>Date of Birth:</b></div>
+                    <div class="col-md-6">{{_response.dob}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"><b>Role:</b></div>
+                    <div class="col-md-6">{{_response.role}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"><b>Years Of Experience:</b></div>
+                    <div class="col-md-6">{{_response.yearsofExperience}} years</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"><b>Qualification:</b></div>
+                    <div class="col-md-6">{{_response.candidateQualification}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row"><br></div>
+    <div class="row"><br></div>
+    <div class="row">
+        <div class="alert alert-info" role="alert">
+            Assessment Notification
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr class="table-warning">
+                        <th></th>
+                        <th>Assessment Id</th>
+                        <th>Assessment Name</th>
+                        <th>Assigned Date</th>
+                        <th>Expiry Date</th>
+                        <th>Status</th>
+                        <th>Recruiter Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="_assessments.length==0"><td></td><td>No assessment available right now</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr *ngFor="let assessment of _assessments">
+                        <td>
+                            <input type="radio" name="assessmentSelection" [disabled]="checkActiveAssessment(assessment)" (change)="onSelected(assessment)">
+                        </td>
+                        <td>{{assessment.assessmentId}}</td>
+                        <td>{{assessment.assessmentName | uppercase}}</td>
+                        <td>{{assessment.assignedDate}}</td>
+                        <td>{{assessment.expiryDate}}</td>
+                        <td>{{assessment.status | uppercase}}</td>
+                        <td>{{assessment.recruiterEmail}}</td>
+                    </tr>    
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-warning" (click) = "start()" [disabled]="!isAssessmentSelected">Start</button>
+        </div>
+    </div>
+</div>

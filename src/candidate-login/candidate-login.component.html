@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+        <div class="mx-auto col-10 col-md-8 col-lg-4">
+            <ul class="tabs-container">
+                <li (click)="onTabClick('Candidate')" [class.active]="identity=='Candidate'" class="tab-link">
+                    <h3>Candidate</h3>
+                </li>
+                <li  (click)="onTabClick('Recruiter')" [class.active]="identity=='Recruiter'" class="tab-link">
+                    <h3>Recruiter</h3>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mx-auto col-10 col-md-8 col-lg-4">
+            <form ngNativeValidate (ngSubmit)="auth()" class="form-control form-control-md" autocomplete="off">
+                    <label class="form-check-label">{{label}}</label>
+                    <input type="text" class="form-control" id="candidateId" name="candidateId" [(ngModel)]="_candidate.candidateId" required/>
+                    <label class="form-check-label">Password</label>
+                    <input type="password" class="form-control" name="password" [(ngModel)]="_candidate.password" required/>
+                    <button type="submit" class="btn btn-success">Login</button>
+                    <button class="btn btn-primary" (click) = "register()" [hidden]="identity=='Recruiter'">Register</button>
+                    <div class="alert alert-success" [hidden]="!_response.authenticated">Login Successful!</div>
+                    <div class="alert alert-success" [hidden]="!this._recruiter_response.authenticated">Login Successful!</div>
+                    <div class="alert alert-danger" [hidden]="!(_requestSent=='0')">Invalid credentials!</div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="footer"><b>@Developed by CodeWreckers - BNP Paribas</b></div>

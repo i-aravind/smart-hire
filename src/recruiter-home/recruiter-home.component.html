@@ -1,0 +1,66 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<div class="alert alert-info" role="alert">
+    <div class="row">
+        <div class="col-md-11">
+            Recruiter Dashboard - Welcome {{_recruiter_response.recruiterName}}!
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-danger" (click)="logout()">Logout</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1"><b>Search By</b></div>
+    <div class="col-md-2">
+        <select class="form-control" name="filter" [(ngModel)]="filterSelector" (change)="selectorChanged()">
+            <option value="" disabled selected>--Please select a filter--</option>
+            <option *ngFor="let filter of filters" [ngValue]="filter">
+                {{filter}}
+            </option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <input type="text" class="form-control" maxlength="20" [(ngModel)]="candidateFilter" (input)="selectorChanged()"/>
+    </div>
+    <div class="col-md-1">Showing</div>
+    <div class="col-md-3">{{filterSelector==''?'(*any*)':filterSelector}} = {{candidateFilter==''?'(*all*)':candidateFilter}}<span (click)="clearFilter()" style="color:red" [hidden]="filterSelector=='' && candidateFilter==''" class="glyphicon glyphicon-remove"></span></div>
+</div>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr class="table-info">
+                <th>Candidate Id</th>
+                <th>Candidate Name</th>
+                <th>Candidate Email</th>
+                <th>Candidate Qualification</th>
+                <th>Candidate Role</th>
+                <th>Candidate Experience</th>
+                <th>Assessment Status</th>
+                <th>Candidate Status</th>
+                <th>Recruiter Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-secondary" *ngFor="let candidate of _candidates | candidateFilter:candidateFilters">
+                <td>{{candidate.candidateId}}</td>
+                <td>{{candidate.candidateName}}</td>
+                <td>{{candidate.candidateEmail}}</td>
+                <td>{{candidate.candidateQualification}}</td>
+                <td>{{candidate.candidateRole}}</td>
+                <td>{{candidate.candidateExperince}}</td>
+                <td>{{candidate.assessmentStatus}}</td>
+                <td>{{candidate.candidateStatus}}</td>
+                <td>
+                    <span (click)="checkOptions(candidate)" style="color:teal" class="glyphicon glyphicon-export"><b style="color:teal" class="action">View</b></span>
+                </td>
+            </tr>    
+        </tbody>
+    </table>
+</div>

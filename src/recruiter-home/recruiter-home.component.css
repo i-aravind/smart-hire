@@ -4,7 +4,7 @@ body {
   
   .navbar {
     overflow: hidden;
-    background-color: teal;
+    background-color: #333;
   }
   
   .navbar a {
@@ -30,10 +30,6 @@ body {
     background-color: inherit;
     font-family: inherit;
     margin: 0;
-  }
-
-  h1{
-    color: rgb(248, 247, 252);
   }
   
   .navbar a:hover, .dropdown:hover .dropbtn {
@@ -64,4 +60,21 @@ body {
   
   .dropdown:hover .dropdown-content {
     display: block;
+  }
+
+  .col-md-1{
+    font-weight: bold;
+    color:teal;
+  }
+  .col-md-3{
+    font-weight: bold;
+    color:gold;
+  }
+
+  .action {
+    background:none;
+    border:none;
+    color:#FFF;
+    font-family:Verdana, Geneva, sans-serif;
+    cursor:pointer;
   }

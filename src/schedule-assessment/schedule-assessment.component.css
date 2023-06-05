@@ -1,0 +1,30 @@
+.form-control,button{
+    font-weight: bold;   
+}
+.form-check-label,h1{
+    font-weight: bold; 
+    color:teal;
+}
+
+.tabs-container{
+  background: #eee;
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  height: 55px;
+  border-bottom: 1px solid #ccc;
+  width:100%
+}
+
+.tabs-container .tab-link{
+  width:33.33%;
+  position: relative;
+  height:100%;
+  padding: 10px;
+  float:left;
+  text-align: center;
+}
+
+.active{
+  border-bottom: 2px solid teal;
+}

@@ -1,10 +1,19 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'smarthire-app',
+  template: `
+  <body>
+    <div class="navbar">
+      <h1>{{pageTitle}}</h1>
+    </div>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </body>
+  `,
+  styleUrls: ['app.component.css']
 })
 export class AppComponent {
-  title = 'smarthire';
+  pageTitle = 'Smart Hire';
 }

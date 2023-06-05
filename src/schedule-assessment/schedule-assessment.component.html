@@ -1,0 +1,58 @@
+
+<div class="container">
+    <div class="tabs-container">
+        <div class="mx-auto col-10 col-md-8 col-lg-4">
+            <h1>Schedule Assessment</h1>
+        </div>
+    </div>
+    <form ngNativeValidate (ngSubmit)="submit()" class="form-control form-control-md" autocomplete="off">
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                    <tr class="table-secondary">
+                        <td>Candidate Id</td>
+                        <td>{{_candidate.candidateId}}</td>
+                    </tr>
+                    <tr class="table-secondary">
+                        <td>Candidate Name</td>
+                        <td>{{_candidate.candidateName}}</td>
+                    </tr>
+                    <tr class="table-secondary">
+                        <td>Candidate Email</td>
+                        <td>{{_candidate.candidateEmail}}</td>
+                    </tr>
+                    <tr class="table-secondary">
+                        <td>Candidate Role</td>
+                        <td>{{_candidate.candidateRole}}</td>
+                    </tr>
+                    <tr class="table-secondary">
+                        <td>Assessment Status</td>
+                        <td>{{_candidate.assessmentStatus}}</td>
+                    </tr>
+                    <tr class="table-secondary">
+                        <td>Candidate Status</td>
+                        <td>{{_candidate.candidateStatus}}</td>
+                    </tr>
+                    <tr class="table-secondary" [hidden]="_candidate.candidateStatus=='IN PROCESS' || _candidate.candidateStatus=='SELECTED'">
+                        <td>Assessment Code<b style="color:red">*</b></td>
+                        <td>
+                            <select class="form-control" name="assessment" [(ngModel)]="_assessment.assessmentName" required>
+                                <option value="" disabled selected>--Please select a assessment--</option>
+                                <option *ngFor="let assessment of assessments" [ngValue]="assessment">
+                                    {{assessment}}
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="table-secondary" [hidden]="_candidate.candidateStatus=='IN PROCESS' || _candidate.candidateStatus=='SELECTED'">
+                        <td>Assessment Expiry Date<b style="color:red">*</b></td>
+                        <td><input type="date" [min]="currentDate | date:'yyyy-MM-dd'" class="form-control" id="expiry" name="expiry" [(ngModel)]="_assessment.expiryDate" required/></td>
+                    </tr>  
+                </tbody>
+            </table>
+        </div>
+        <button type = "submit" [hidden]="_candidate.candidateStatus=='IN PROCESS' || _candidate.candidateStatus=='SELECTED'" class="button btn btn-success">Schedule</button>
+        <button (click)="revoke(_candidate)" [hidden]="!(_candidate.candidateStatus=='IN PROCESS' || _candidate.candidateStatus=='SELECTED')" class="button btn btn-danger">Revoke</button>
+        <button (click)="back()" class="button btn btn-primary">Back</button>
+    </form>
+</div>

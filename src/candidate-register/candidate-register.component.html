@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row">
+        <div class="mx-auto col-10 col-md-8 col-lg-6">
+            <ul class="tabs-container">
+                <li class="tab-link">
+                    <h1>Registration</h1>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mx-auto col-10 col-md-8 col-lg-6">
+            <form ngNativeValidate (ngSubmit)="register()" class="form-control form-control-md" autocomplete="off">
+                    <label class="form-check-label">Candidate Name</label><b style="color:red">*</b>
+                    <input type="text" class="form-control" id="candidateName" name="candidateId" [(ngModel)]="_candidate.candidateName" required/>
+                    <label class="form-check-label">Date Of Birth</label><b style="color:red">*</b>
+                    <input type="date" [max]="currentDate | date:'yyyy-MM-dd'" class="form-control" id="dob" name="dob" [(ngModel)]="_candidate.dob" required/>
+                    <label class="form-check-label">Password</label><b style="color:red">*</b>
+                    <input type="password" minlength="8" maxlength="15" class="form-control" name="password" [(ngModel)]="_candidate.password" required/>
+                    <label class="form-check-label">Confirm Password</label><b style="color:red">*</b>
+                    <input type="password" minlength="8" maxlength="15" class="form-control" name="cpassword" [(ngModel)]="confirmPassword"  required/>
+                    <label class="form-check-label">Email</label><b style="color:red">*</b>
+                    <input type="email" class="form-control" name="email" [(ngModel)]="_candidate.email" required/>
+                    <label class="form-check-label">Job Role</label><b style="color:red">*</b>
+                    <select class="form-control" name="jobrole" [(ngModel)]="_candidate.role" required>
+                        <option value="" disabled selected>--Please select job role--</option>
+                        <option *ngFor="let role of roles" [ngValue]="role">
+                            {{role}}
+                        </option>
+                    </select>
+                    <label class="form-check-label">Qualification</label><b style="color:red">*</b>
+                    <select class="form-control" name="candidateQualification" [(ngModel)]="_candidate.candidateQualification" required>
+                        <option value="" disabled selected>--Please select qualification--</option>
+                        <option *ngFor="let qualification of qualifications" [ngValue]="qualification">
+                            {{qualification}}
+                        </option>
+                    </select>
+                    <label class="form-check-label">Total years of experience</label><b style="color:red">*</b>
+                    <input type="number" class="form-control" name="experience" [(ngModel)]="_candidate.yearsofExperience" required/>
+                <div class="row">
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <button class="btn btn-primary" (click)="back()">Back</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
